@@ -3,6 +3,7 @@ import { UserEntity } from '../core/entities/user.entity';
 import { IDataServices } from '../core/service.abstract';
 import { UserDto, UpdateUserDto } from '../core/dtos';
 import { UserFactoryService } from './user-factory.service';
+import { DeleteResult } from 'typeorm';
 
 @Injectable()
 export class UserUseCases {
@@ -31,11 +32,17 @@ export class UserUseCases {
     return this.dataServices.users.create(newUser);
   }
 
-  updateUser(
-    userId: string,
+  async updateUser(
+    userId: number,
     UpdateUserDto: UpdateUserDto,
   ): Promise<UserEntity> {
-    const user = this.userFactoryService.updateUser(UpdateUserDto);
+    const user = await this.userFactoryService.updateUser(UpdateUserDto);
     return this.dataServices.users.update(userId, user);
+  }
+
+  deleteUser(
+    userId: number,
+  ): Promise<DeleteResult> {
+    return this.dataServices.users.delete(userId)
   }
 }

@@ -3,7 +3,7 @@ import { Body, Controller, Request, Get, Post, Req, UseGuards } from '@nestjs/co
 import { AuthService } from '../auth/auth.service';
 import { LocalAuthGuard } from '../core/guards/local.guards';
 import { JwtAuthGuard } from '../core/guards/jwt.guards';
-import { UserEntity } from 'src/core/entities/user.entity';
+import { UserEntity } from '../core/entities/user.entity';
 
 @Controller('api/auth')
 export class AuthController {

@@ -1,8 +1,7 @@
-import { Controller, Get, Param, Post, Body, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, UseGuards, Delete } from '@nestjs/common';
 import { UserDto, UpdateUserDto } from '../core/dtos/user.dto';
 import { UserUseCases } from '../user-use-cases/user-use-case';
-import { JwtAuthGuard } from 'src/core/guards/jwt.guards';
-import { AuthGuard } from '@nestjs/passport';
+import { JwtAuthGuard } from '../core/guards/jwt.guards';
 
 @Controller('api/user')
 export class UserController {
@@ -29,9 +28,15 @@ export class UserController {
   @Put(':id')
   @UseGuards(JwtAuthGuard)
   updateUser(
-    @Param('id') userId: string,
+    @Param('id') userId: number,
     @Body() updateuserDto: UpdateUserDto,
   ) {
     return this.userUseCases.updateUser(userId, updateuserDto);
+  }
+
+  @Delete('username')
+  @UseGuards(JwtAuthGuard)
+  deleteUser( @Param('id') username: number){
+    return this.userUseCases.deleteUser(username);
   }
 }
