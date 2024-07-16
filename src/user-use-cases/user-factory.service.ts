@@ -1,22 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { UserEntity } from '../core/entities/user.entity';
-import { CreateUserDto, UpdateUserDto } from '../core/dtos';
+import { UserDto, UpdateUserDto } from '../core/dtos';
 
+/** We use factory pattern to populate user dtos so that we can have unifirm input for our db. */
 @Injectable()
 export class UserFactoryService {
-  createNewUser(createUserDto: CreateUserDto) {
-    const newUser = new UserEntity();
-    newUser.username = createUserDto.username;
-    newUser.password = createUserDto.password;
-
-    return newUser;
+  createNewUser(UserDto: UserDto) {
+   return new UserEntity({ ...UserDto, created_at:  new Date() });
   }
 
   updateUser(UpdateUserDto: UpdateUserDto) {
-    const newUser = new UserEntity();
-    newUser.username = UpdateUserDto.username;
-    newUser.password = UpdateUserDto.password;
-
-    return newUser;
+    return new UserEntity({ ...UpdateUserDto, updated_at:  new Date()});
   }
 }

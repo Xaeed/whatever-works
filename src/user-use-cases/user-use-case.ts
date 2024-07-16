@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UserEntity } from '../core/entities/user.entity';
 import { IDataServices } from '../core/service.abstract';
-import { CreateUserDto, UpdateUserDto } from '../core/dtos';
+import { UserDto, UpdateUserDto } from '../core/dtos';
 import { UserFactoryService } from './user-factory.service';
 
 @Injectable()
@@ -19,9 +19,16 @@ export class UserUseCases {
     return this.dataServices.users.get(id);
   }
 
-  createUser(CreateUserDto: CreateUserDto): Promise<UserEntity> {
-    const user = this.userFactoryService.createNewUser(CreateUserDto);
-    return this.dataServices.users.create(user);
+  getUserByParams(params: any): Promise<UserEntity> {
+    return this.dataServices.users.getByParams(params);
+  }
+
+  createUser(UserDto: UserDto): Promise<UserEntity> {
+    const newUser = new UserEntity({
+      ...UserDto,
+      created_at: new Date(),
+    });
+    return this.dataServices.users.create(newUser);
   }
 
   updateUser(

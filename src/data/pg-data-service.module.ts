@@ -11,11 +11,11 @@ import { DataServices } from './pg-data.service';
     TypeOrmModule.forFeature([UserEntity]),
     ConfigModule.forRoot({
         isGlobal: true, // Make the ConfigModule global
-        envFilePath: '.env', // Specify the path to your .env file
+        envFilePath: '.env',
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: 'postgresql://postgres:postgres@localhost:5432/wtworks',  //DATA_BASE_CONFIGURATION.pgConnectionString,
+      url: DATA_BASE_CONFIGURATION.pgConnectionString,
       entities: [UserEntity],
       synchronize: true, // Set to false in production
     }),

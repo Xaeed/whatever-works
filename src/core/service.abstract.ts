@@ -12,6 +12,8 @@ export abstract class IGenericRepository<T> {
     abstract create(item: T): Promise<T>;
   
     abstract update(id: string, item: T);
+
+    abstract getByParams(params:any): Promise<T>;
   }
 
 export abstract class IDataServices {

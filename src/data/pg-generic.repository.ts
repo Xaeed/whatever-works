@@ -27,4 +27,9 @@ export class GenericRepository<T> implements IGenericRepository<T> {
   update(id: any, item: DeepPartial<T>): Promise<T> {
     return this._repository.save({ ...item, id });
   }
+  
+  getByParams(params:any):Promise<T>{
+    const whereCondition = params as FindOptionsWhere<T>;
+    return this._repository.findOne({ where: whereCondition , relations: this._relations });
+  }
 }
